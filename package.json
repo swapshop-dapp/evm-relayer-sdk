@@ -1,0 +1,16 @@
+{
+    "name": "goswapshop-relayer-evm-sdk",
+    "version": "0.1.0",
+    "main": "index.ts",
+    "repository": "git@github.com/swapshop-dapp/relayer-evm-sdk.git",
+    "author": "danielbui12",
+    "license": "Apache 2.0",
+    "devDependencies": {
+        "@wagmi/cli": "^2.1.4"
+    },
+    "dependencies": {
+        "@types/node": "^20.12.5",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.4.4"
+    }
+}
