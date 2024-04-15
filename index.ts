@@ -11,18 +11,11 @@ import {
 
 export const goSwapShopRelayerAbi = [
   {
-    type: 'constructor',
-    inputs: [
-      { name: 'defaultOwner_', internalType: 'address', type: 'address' },
-      { name: 'signatureVerifier_', internalType: 'address', type: 'address' },
-      { name: 'wormhole_', internalType: 'address', type: 'address' },
-      { name: 'tokenBridge_', internalType: 'address', type: 'address' },
-      { name: 'chainId_', internalType: 'uint16', type: 'uint16' },
-      { name: 'wormholeFinality_', internalType: 'uint8', type: 'uint8' },
-      { name: 'feePrecision_', internalType: 'uint32', type: 'uint32' },
-      { name: 'relayerFeePercentage_', internalType: 'uint32', type: 'uint32' },
-    ],
-    stateMutability: 'payable',
+    type: 'function',
+    inputs: [],
+    name: 'UPGRADE_INTERFACE_VERSION',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -208,6 +201,22 @@ export const goSwapShopRelayerAbi = [
   },
   {
     type: 'function',
+    inputs: [
+      { name: 'defaultOwner_', internalType: 'address', type: 'address' },
+      { name: 'signatureVerifier_', internalType: 'address', type: 'address' },
+      { name: 'wormhole_', internalType: 'address', type: 'address' },
+      { name: 'tokenBridge_', internalType: 'address', type: 'address' },
+      { name: 'chainId_', internalType: 'uint16', type: 'uint16' },
+      { name: 'wormholeFinality_', internalType: 'uint8', type: 'uint8' },
+      { name: 'feePrecision_', internalType: 'uint32', type: 'uint32' },
+      { name: 'relayerFeePercentage_', internalType: 'uint32', type: 'uint32' },
+    ],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
     inputs: [{ name: 'orderId_', internalType: 'bytes32', type: 'bytes32' }],
     name: 'isOrderExisted',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
@@ -232,6 +241,13 @@ export const goSwapShopRelayerAbi = [
     name: 'placeAnOrder',
     outputs: [],
     stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'proxiableUUID',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -308,6 +324,16 @@ export const goSwapShopRelayerAbi = [
   },
   {
     type: 'function',
+    inputs: [
+      { name: 'newImplementation', internalType: 'address', type: 'address' },
+      { name: 'data', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'upgradeToAndCall',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
     inputs: [],
     name: 'wormhole',
     outputs: [
@@ -321,6 +347,19 @@ export const goSwapShopRelayerAbi = [
     name: 'wormholeFinality',
     outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
     stateMutability: 'view',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'version',
+        internalType: 'uint64',
+        type: 'uint64',
+        indexed: false,
+      },
+    ],
+    name: 'Initialized',
   },
   {
     type: 'event',
@@ -503,6 +542,19 @@ export const goSwapShopRelayerAbi = [
     name: 'OrderSent',
   },
   {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'implementation',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'Upgraded',
+  },
+  {
     type: 'error',
     inputs: [{ name: 'target', internalType: 'address', type: 'address' }],
     name: 'AddressEmptyCode',
@@ -523,6 +575,14 @@ export const goSwapShopRelayerAbi = [
     inputs: [{ name: 's', internalType: 'bytes32', type: 'bytes32' }],
     name: 'ECDSAInvalidSignatureS',
   },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'implementation', internalType: 'address', type: 'address' },
+    ],
+    name: 'ERC1967InvalidImplementation',
+  },
+  { type: 'error', inputs: [], name: 'ERC1967NonPayable' },
   { type: 'error', inputs: [], name: 'FailedInnerCall' },
   {
     type: 'error',
@@ -537,6 +597,8 @@ export const goSwapShopRelayerAbi = [
     ],
     name: 'InsufficientBalance',
   },
+  { type: 'error', inputs: [], name: 'InvalidInitialization' },
+  { type: 'error', inputs: [], name: 'NotInitializing' },
   {
     type: 'error',
     inputs: [{ name: 'msgSender', internalType: 'address', type: 'address' }],
@@ -560,6 +622,12 @@ export const goSwapShopRelayerAbi = [
     name: 'SafeERC20FailedOperation',
   },
   { type: 'error', inputs: [], name: 'TransferFailed' },
+  { type: 'error', inputs: [], name: 'UUPSUnauthorizedCallContext' },
+  {
+    type: 'error',
+    inputs: [{ name: 'slot', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'UUPSUnsupportedProxiableUUID',
+  },
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -572,6 +640,15 @@ export const goSwapShopRelayerAbi = [
 export const useReadGoSwapShopRelayer = /*#__PURE__*/ createUseReadContract({
   abi: goSwapShopRelayerAbi,
 })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link goSwapShopRelayerAbi}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`
+ */
+export const useReadGoSwapShopRelayerUpgradeInterfaceVersion =
+  /*#__PURE__*/ createUseReadContract({
+    abi: goSwapShopRelayerAbi,
+    functionName: 'UPGRADE_INTERFACE_VERSION',
+  })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link goSwapShopRelayerAbi}__ and `functionName` set to `"calculateFee"`
@@ -691,6 +768,15 @@ export const useReadGoSwapShopRelayerOwner =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link goSwapShopRelayerAbi}__ and `functionName` set to `"proxiableUUID"`
+ */
+export const useReadGoSwapShopRelayerProxiableUuid =
+  /*#__PURE__*/ createUseReadContract({
+    abi: goSwapShopRelayerAbi,
+    functionName: 'proxiableUUID',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link goSwapShopRelayerAbi}__ and `functionName` set to `"relayerFeePercentage"`
  */
 export const useReadGoSwapShopRelayerRelayerFeePercentage =
@@ -770,6 +856,15 @@ export const useWriteGoSwapShopRelayerCreateAnOrder =
   })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link goSwapShopRelayerAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useWriteGoSwapShopRelayerInitialize =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: goSwapShopRelayerAbi,
+    functionName: 'initialize',
+  })
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link goSwapShopRelayerAbi}__ and `functionName` set to `"placeAnOrder"`
  */
 export const useWriteGoSwapShopRelayerPlaceAnOrder =
@@ -833,6 +928,15 @@ export const useWriteGoSwapShopRelayerUpdateRelayerFee =
   })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link goSwapShopRelayerAbi}__ and `functionName` set to `"upgradeToAndCall"`
+ */
+export const useWriteGoSwapShopRelayerUpgradeToAndCall =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: goSwapShopRelayerAbi,
+    functionName: 'upgradeToAndCall',
+  })
+
+/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link goSwapShopRelayerAbi}__
  */
 export const useSimulateGoSwapShopRelayer =
@@ -872,6 +976,15 @@ export const useSimulateGoSwapShopRelayerCreateAnOrder =
   /*#__PURE__*/ createUseSimulateContract({
     abi: goSwapShopRelayerAbi,
     functionName: 'createAnOrder',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link goSwapShopRelayerAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useSimulateGoSwapShopRelayerInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: goSwapShopRelayerAbi,
+    functionName: 'initialize',
   })
 
 /**
@@ -938,10 +1051,28 @@ export const useSimulateGoSwapShopRelayerUpdateRelayerFee =
   })
 
 /**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link goSwapShopRelayerAbi}__ and `functionName` set to `"upgradeToAndCall"`
+ */
+export const useSimulateGoSwapShopRelayerUpgradeToAndCall =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: goSwapShopRelayerAbi,
+    functionName: 'upgradeToAndCall',
+  })
+
+/**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link goSwapShopRelayerAbi}__
  */
 export const useWatchGoSwapShopRelayerEvent =
   /*#__PURE__*/ createUseWatchContractEvent({ abi: goSwapShopRelayerAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link goSwapShopRelayerAbi}__ and `eventName` set to `"Initialized"`
+ */
+export const useWatchGoSwapShopRelayerInitializedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: goSwapShopRelayerAbi,
+    eventName: 'Initialized',
+  })
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link goSwapShopRelayerAbi}__ and `eventName` set to `"OrderCanceled"`
@@ -995,4 +1126,13 @@ export const useWatchGoSwapShopRelayerOrderSentEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
     abi: goSwapShopRelayerAbi,
     eventName: 'OrderSent',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link goSwapShopRelayerAbi}__ and `eventName` set to `"Upgraded"`
+ */
+export const useWatchGoSwapShopRelayerUpgradedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: goSwapShopRelayerAbi,
+    eventName: 'Upgraded',
   })
